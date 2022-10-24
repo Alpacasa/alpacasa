@@ -1,0 +1,223 @@
+<odoo>
+    <template id="reporte_billed_summary_py">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.basic_layout">
+                     <div class="text-center">
+                         <h4>Informe de Cobranzas Detallado</h4>
+                     </div>
+                     <br/>
+                         <table class="tabla" style="font-size: 13px; border-color: white">
+                            <thead>
+                                <tr>
+                                    <th style="width:300px; border-color: white">
+                                        Fecha desde:
+                                        <span t-field="o.date_ini"/>
+                                    </th>
+                                    <th style="border-color: white; width:240px">
+                                        Fecha hasta:
+                                        <span t-field="o.date_end"/>
+                                    </th>
+                                    <th style="border-color: white">
+                                        Fecha reporte:
+                                        <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y %H:%M')"/>
+                                    </th>
+                                </tr>
+                            </thead>
+                         </table>
+                         <br/>
+                    <div class="page">
+                         <!-- Variables -->
+                         <t t-set="monto" t-value="0"/>
+                         <t t-set="costo" t-value="0"/>
+                         <t t-set="total_libre_impuesto" t-value="0"/>
+                         <t t-set="monto_total" t-value="0"/>
+                         <t t-set="margen" t-value="0"/>
+                         <t t-set="margen_porc" t-value="0"/>
+
+                         <link rel="stylesheet" href="/py_ctrm_account_report/static/src/css/billed_summary.css"/>
+                         <br/>
+                         <div class="page">
+                            <div class="contenedor">
+                              <table class="tabla">
+                                 <thead >
+                                    <tr>
+                                       <th class="cabecera" style="border-bottom: 1px solid">
+                                           Cliente
+                                       </th>
+                                       <th class="cabecera" style="text-align: center; border-bottom: 1px solid">
+                                           Factura
+                                       </th>
+                                       <th class="cabecera" style="border-bottom: 1px solid">
+                                           Fecha Recibo
+                                       </th>
+                                       <th class="cabecera" style="text-align: center; border-bottom: 1px solid">
+                                           Cobrador
+                                       </th>
+                                       <th class="cabecera" style="text-align: right; border-bottom: 1px solid">
+                                           Monto
+                                       </th>
+                                       <th class="cabecera" style="text-align: left; border-bottom: 1px solid">
+                                           Producto
+                                       </th>
+                                       <th class="cabecera" style="text-align: right; border-bottom: 1px solid">
+                                           Cantidad
+                                       </th>
+                                       <th class="cabecera" style="text-align: right; border-bottom: 1px solid">
+                                           P unit/con IVA
+                                       </th>
+                                       <th class="cabecera" style="text-align: right; border-bottom: 1px solid">
+                                           Costo
+                                       </th>
+                                       <th class="cabecera" style="text-align: right; border-bottom: 1px solid">
+                                           Total Libre de impuestos
+                                       </th>
+                                       <th class="cabecera" style="text-align: right; border-bottom: 1px solid">
+                                           Total Monto
+                                       </th>
+                                       <th class="cabecera" style="text-align: right; border-bottom: 1px solid">
+                                           Margen
+                                       </th>
+                                       <th class="cabecera" style="text-align: right; border-bottom: 1px solid">
+                                           % Margen
+                                       </th>
+                                    </tr>
+
+                                 </thead>
+
+<!--                                 <body>-->
+                                     <t t-foreach="o.datos()" t-as="h">
+                                         <tr>
+                                            <t t-foreach="h.matched_move_line_ids" t-as="u" class="lineas-colores" style="border-top: 1px solid">
+                                                <t t-if="u.move_id.invoice_line_ids">
+                                                    <t t-foreach="u.move_id.invoice_line_ids" t-as="d" class="lineas-colores">
+                                                        <t t-if="d.percent_margin &gt; o.margen_desde and d.percent_margin &lt; o.margen_hasta">
+                                                            <tr>
+                                                                  <td style="text-align: left; border-top: 1px solid " >
+                                                                      <span t-field="u.move_id.partner_id.name"/>
+                                                                  </td>
+                                                                  <td style="text-align: center;border-top: 1px solid">
+                                                                      <span t-field="u.move_id.name"/>
+                                                                  </td>
+                                                                  <td style="text-align: center;border-top: 1px solid">
+                                                                      <span t-field="h.payment_date"/>
+                                                                  </td>
+                                                                  <td style="text-align: center;border-top: 1px solid">
+                                                                      <span t-field="h.invoice_vendedor.name"/>
+                                                                  </td>
+                                                                  <td style="text-align: right;border-top: 1px solid">
+                                                                      <span t-esc="o.agregar_punto_de_miles(u.payment_group_matched_amount_store)"/>
+                                                                  </td>
+                                                            </tr>
+<!--                                                                <body>-->
+                                                                   <t t-if="u.move_id.invoice_line_ids">
+                                                                       <t t-foreach="u.move_id.invoice_line_ids" t-as="xx" class="lineas-colores">
+                                                                           <t t-if="xx.percent_margin &gt; o.margen_desde and xx.percent_margin &lt; o.margen_hasta">
+                                                                               <tr>
+                                                                                   <td></td>
+                                                                                   <td></td>
+                                                                                   <td></td>
+                                                                                   <td></td>
+                                                                                   <td></td>
+                                                                                   <td style="text-align: left;">
+                                                                                       <span t-field="xx.product_id.name"/>
+                                                                                   </td>
+                                                                                   <td style="text-align: right;">
+                                                                                       <span t-esc="o.agregar_punto_de_miles(xx.quantity)"/>
+                                                                                   </td>
+                                                                                   <td style="text-align: right;">
+                                                                                       <span t-esc="o.agregar_punto_de_miles(xx.price_unit)"/>
+                                                                                   </td>
+                                                                                   <td style="text-align: right;">
+                                                                                       <span t-esc="o.agregar_punto_de_miles(xx.costs_product_pyg)"/>
+                                                                                   </td>
+                                                                                   <td style="text-align: right;">
+                                                                                       <span t-esc="o.agregar_punto_de_miles(xx.price_subtotal)"/>
+                                                                                   </td>
+                                                                                   <td style="text-align: right;">
+                                                                                       <span t-esc="o.agregar_punto_de_miles(xx.price_total)"/>
+                                                                                   </td>
+                                                                                   <td style="text-align: right;">
+                                                                                       <span t-esc="o.agregar_punto_de_miles(xx.costs_margin_pyg)"/>
+                                                                                   </td>
+                                                                                   <td  style="text-align: right;">
+                                                                                       <span t-esc="xx.percent_margin"/>
+                                                                                   </td>
+                                                                                   <t t-set="monto"
+                                                                                      t-value="monto + xx.payment_group_matched_amount_store"/>
+                                                                                   <t t-set="costo"
+                                                                                      t-value="costo + xx.costs_tot_product_pyg"/>
+                                                                                   <t t-set="total_libre_impuesto"
+                                                                                      t-value="total_libre_impuesto + xx.price_subtotal"/>
+                                                                                   <t t-set="total_libre_impuesto"
+                                                                                      t-value="total_libre_impuesto"/>
+                                                                                   <t t-set="monto_total"
+                                                                                      t-value="monto_total + xx.price_total"/>
+                                                                                   <t t-set="monto_total" t-value="monto_total"/>
+                                                                                   <t t-set="margen"
+                                                                                      t-value="margen + xx.costs_margin_pyg"/>
+                                                                                   <t t-set="margen_porc"
+                                                                                      t-value="margen/total_libre_impuesto*100"/>
+                                                                               </tr>
+                                                                           </t>
+                                                                       </t>
+                                                                   </t>
+<!--                                                                </body>-->
+                                                        </t>
+                                                    </t>
+                                                </t>
+                                            </t>
+                                         </tr>
+                                     </t>
+<!--                                 </body>-->
+                                  <body>
+                                     <div class="page">
+                                        <tr class="negrita">
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th class="con-bordes">
+                                                <span style="font-weight:bold;">Total:</span>
+                                            </th>
+                                            <th class="con-bordes" style="text-align:right; width: 120px">
+                                                <span t-esc="o.agregar_punto_de_miles(costo)"/>
+                                            </th>
+                                            <th class="con-bordes" style="text-align:right; width: 120px">
+                                                <span t-esc="o.agregar_punto_de_miles(total_libre_impuesto)"/>
+                                            </th>
+                                            <th class="con-bordes" style="text-align:right; width: 120px">
+                                                <span t-esc="o.agregar_punto_de_miles(monto_total)"/>
+                                            </th>
+                                            <th class="con-bordes" style="text-align:right; width: 120px">
+                                                <span t-esc="o.agregar_punto_de_miles(margen)"/>
+                                            </th>
+                                            <th class="con-bordes" style="text-align:right; width: 120px">
+                                                <span t-esc= "o.agregar_decimal(margen_porc)"/>
+                                            </th>
+                                        </tr>
+                                     </div>
+                                  </body>
+                              </table>
+                         </div>
+                     </div>
+                         <br/>
+                         <div class="footer">
+                             <div class="text-center" style="border-top: 2px solid black;">
+                                 <ul class="list-inline">
+                                     Página:
+                                     <span class="page"/>
+                                     de
+                                     <span class="topage"/>
+                                 </ul>
+                             </div>
+                         </div>
+                     </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,48 @@
+<odoo>
+    <data>
+        <record id="wizard_billed_summary" model="ir.ui.view">
+            <field name="name">Informe de Cobranza Alpacasa</field>
+            <field name="model">billed.summary.report</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="company_id" invisible="1"/>
+                        <field name="date_ini"/>
+                        <field name="date_end"/>
+                    </group>
+                    <group string="Campos para el filtro">
+<!--                        <field name="orden" string="Filtar por"/>-->
+                        <field name="cliente" options="{'no_create_edit': True, 'no_create': True,'no_open':True}"/>
+                        <field name="cobrador" options="{'no_create_edit': True, 'no_create': True,'no_open':True}"/>
+                    </group>
+                    <group>
+                        <field name="comision_id"/>
+                    </group>
+
+                    <group>
+                        <field name="margen_desde"/>
+                        <field name="margen_hasta"/>
+                    </group>
+                    <group>
+                        <field name="type_report"/>
+                        <field name="type"/>
+                    </group>
+                    <footer>
+                        <button name="check_report" type="object" string="Generar" class="oe_highlight"/>
+                        <button string="Cancelar" special="cancel" class="btn btn-danger"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_billed_summary" model="ir.actions.act_window">
+            <field name="name">Informe de Cobranza Alpacasa</field>
+            <field name="res_model">billed.summary.report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_billed_summary"/>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>
