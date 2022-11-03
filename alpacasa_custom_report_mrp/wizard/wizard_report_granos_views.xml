@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="mrp_granos_reports_wizard_view" model="ir.ui.view">
+            <field name="name">Reporte Granos</field>
+            <field name="model">mrp.production.granos.cab.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group decoration-bf="1">
+                            <group>
+                                <field name="date_ini"/>
+                                <field name="date_end"/>
+                                <field name="product_tod"/>
+                            </group>
+                            <group>
+                                <field name="production_cab_id" options="{'no_create': True}"/>
+                                <field name="product_id" options="{'no_create': True}"/>
+                                <field name="lot_producing_id" string="Lotes" options="{'no_create': True}"/>
+                                <field name="cod_proveedor" options="{'no_create': True}"/>
+                            </group>
+
+                            <group>
+                                <field name="date" invisible="1"/>
+                                <field name="user_id" options="{'no_create': True}" invisible="1"/>
+                                <field name="tipo_producto"/>
+                                <field name="state"/>
+                            </group>
+
+                            <group>
+                                <field name="company_id" readonly="1" invisible="1"/>
+                            </group>
+                            <group>
+                             <field name="type"/>
+                            </group>
+                        </group>
+                        <footer>
+                            <button name="check_report" string="Generate" type="object" class="oe_highlight"/>
+                            <button string="Cancel" class="oe_link" special="cancel"/>
+                        </footer>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="mrp_prueba_action" model="ir.actions.act_window">
+            <field name="name">Informe control de Granos</field>
+            <field name="res_model">mrp.production.granos.cab.wizard</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="mrp_granos_reports_wizard_view"/>
+            <field name="target">new</field>
+        </record>
+
+
+        <menuitem
+                name="Informe Granos"
+                id="menu_mrp_informe_granos_action"
+                parent="menu_mrp_informe_action"
+                action="mrp_prueba_action"
+                sequence="5"
+        />
+    </data>
+</odoo>

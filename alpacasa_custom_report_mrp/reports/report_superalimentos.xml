@@ -1,0 +1,211 @@
+<odoo>
+    <template id="report_resumen_superalimentos">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <t t-foreach="docs" t-as="o">
+<!--                    <link rel="stylesheet" href="C:\Program Files\Odoo14\server\odoo\alpacasa\py_ctrm_mrp\static\src\css\report.css"/>-->
+                    <div class="text-center">
+                         <h4>Informe de SuperAlimentos</h4>
+                    </div>
+
+                    <!-- Variables -->
+                         <t t-set="bruto_tot" t-value="0"/>
+                         <t t-set="final_tot" t-value="0"/>
+                         <t t-set="desc_tot" t-value="0"/>
+                         <t t-set="merm_tot" t-value="0"/>
+                         <t t-set="cos_tot" t-value="0"/>
+                         <t t-set="kg_tot" t-value="0"/>
+                         <t t-set="fin_tot" t-value="0"/>
+
+
+
+                         <table class="tabla" style="font-size: 13px; border-color: white">
+                            <thead>
+                                <tr>
+                                    <th style="width:300px; border-color: white">
+                                        Fecha desde:
+                                        <span t-field="o.date_ini"/>
+                                    </th>
+                                    <th style="border-color: white; width:240px">
+                                        Fecha hasta:
+                                        <span t-field="o.date_end"/>
+                                    </th>
+                                    <th style="border-color: white">
+                                        Fecha reporte:
+                                        <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y %H:%M')"/>
+                                    </th>
+                                </tr>
+                            </thead>
+                         </table>
+                         <br/>
+
+                         <link rel="stylesheet" href="/py_ctrm_account_report/static/src/css/billed_summary.css"/>
+                         <br/>
+                         <div class="page">
+                            <div class="contenedor">
+                              <table class="tabla">
+                                 <thead >
+                                    <tr>
+                                       <th class="cabecera" style="width:150px;border-bottom: 1px solid">
+                                           Lote
+                                       </th>
+                                        <th class="cabecera" style="width:150px;border-bottom: 1px solid">
+                                           Proveedor
+                                       </th>
+                                       <th class="cabecera" style="width:100px;text-align: center; border-bottom: 1px solid">
+                                           Fecha de Producción
+                                       </th>
+                                       <th class="cabecera" style="width:100px;text-align: center; border-bottom: 1px solid">
+                                           Peso <Bruto></Bruto>
+                                       </th>
+                                       <th class="cabecera" style="width:100px;text-align: center;border-bottom: 1px solid">
+                                           Peso Final
+                                       </th>
+                                       <th class="cabecera" style="width:100px;text-align: center; border-bottom: 1px solid">
+                                           Descuento %
+                                       </th>
+                                       <th class="cabecera" style="width:100px;text-align: center; border-bottom: 1px solid">
+                                           Merma
+                                       </th>
+                                       <th class="cabecera" style="width:100px;text-align: center; border-bottom: 1px solid">
+                                           Cant. BB
+                                       </th>
+                                       <th class="cabecera" style="width:100px;text-align: center; border-bottom: 1px solid">
+                                           Pureza
+                                       </th>
+                                       <th class="cabecera" style="width:100px;text-align: center; border-bottom: 1px solid">
+                                           Humedad
+                                       </th>
+                                       <th class="cabecera" style="width:100px;text-align: center; border-bottom: 1px solid">
+                                           Costo Total
+                                       </th>
+                                       <th class="cabecera" style="width:100px;text-align: center; border-bottom: 1px solid">
+                                           Costo por Kg
+                                       </th>
+                                       <th class="cabecera" style="width:100px; text-align: center; border-bottom: 1px solid">
+                                           Costo Final
+                                       </th>
+                                        <th class="cabecera" style="width:100px; text-align: center; border-bottom: 1px solid">
+                                           Cantidad de Horas
+                                       </th>
+                                    </tr>
+                                 </thead>
+                                 <body>
+                                    <t t-foreach="o.datos()" t-as="h">
+                                        <tr>
+                                            <td style="text-align: left; border-top: 1px solid " >
+                                                <span t-field="h.lot_producing_id"/>
+                                            </td>
+                                            <td style="text-align: left; border-top: 1px solid " >
+                                                <span t-field="h.cod_proveedor"/>
+                                            </td>
+                                            <td style="text-align: left; border-top: 1px solid " >
+                                                <span t-field="h.date_planned_start"/>
+                                            </td>
+                                            <td style="text-align: right;border-top: 1px solid">
+                                                <span t-esc="o.agregar_punto_de_miles(h.bruto_reporte2)"/>
+                                            </td>
+                                            <td style="text-align: right;border-top: 1px solid">
+                                                <span t-esc="o.agregar_punto_de_miles(h.final_reporte2)"/>
+                                            </td>
+                                            <td style="text-align: right;border-top: 1px solid">
+                                                <span t-esc="o.agregar_decimal(h.merma_porce2)"/>
+                                            </td>
+                                            <td style="text-align: right;border-top: 1px solid">
+                                                <span t-esc="o.agregar_punto_de_miles(h.merma2)"/>
+                                            </td>
+                                            <td style="text-align: right;border-top: 1px solid">
+                                                <span t-esc="o.agregar_punto_de_miles(h.bb_reporte2)"/>
+                                            </td>
+                                            <td style="text-align: right;border-top: 1px solid">
+                                                <span t-field="h.pureza_reporte2"/>
+                                            </td>
+                                            <td style="text-align: right;border-top: 1px solid">
+                                                <span t-esc="o.agregar_decimal(h.humedad_reporte2)"/>
+                                            </td>
+                                            <td style="text-align: right;border-top: 1px solid">
+                                                <span t-esc="o.agregar_punto_de_miles(h.costototal_reporte)"/>
+                                            </td>
+                                            <td style="text-align: right;border-top: 1px solid">
+                                                <span t-esc="o.agregar_punto_de_miles(h.costo_kg_reporte)"/>
+                                            </td>
+                                            <td style="text-align: right;border-top: 1px solid">
+                                                <span t-esc="o.agregar_punto_de_miles(h.costo_final_reporte)"/>
+                                            </td>
+                                            <td style="text-align: right;border-top: 1px solid">
+                                                <span t-esc="o.agregar_punto_de_miles(h.horas_reporte)"/>
+                                            </td>
+                                            <t t-set="bruto_tot"
+                                                t-value="bruto_tot + h.bruto_reporte2"/>
+                                            <t t-set="final_tot"
+                                                t-value="final_tot + h.final_reporte2"/>
+                                            <t t-set="merm_tot"
+                                                t-value="merm_tot + h.merma2"/>
+                                            <t t-set="desc_tot"
+                                               t-value="merm_tot/bruto_tot*100"/>
+                                            <t t-set="cos_tot"
+                                                t-value="cos_tot + h.costototal_reporte"/>
+                                            <t t-set="kg_tot"
+                                                t-value="cos_tot / bruto_tot"/>
+                                            <t t-set="fin_tot"
+                                                t-value="cos_tot / final_tot"/>
+                                        </tr>
+                                    </t>
+                                 </body>
+                                 <body>
+                                     <div class="page">
+<!--                                        <div class="contenedor">-->
+<!--                                            <table class="tabla">-->
+                                                <tr class="negrita">
+                                                     <th></th>
+                                                     <th></th>
+                                                        <th class="con-bordes">
+                                                            <span style="font-weight:bold;">Total:</span>
+                                                        </th>
+                                                        <th class="con-bordes" style="text-align:right; width: 120px">
+                                                            <span t-esc="o.agregar_punto_de_miles(bruto_tot)"/>
+                                                        </th>
+                                                        <th class="con-bordes" style="text-align:right; width: 120px">
+                                                            <span t-esc="o.agregar_punto_de_miles(final_tot)"/>
+                                                        </th>
+                                                         <th class="con-bordes" style="text-align:right; width: 120px">
+                                                             <span t-esc="o.agregar_decimal(desc_tot)"/>
+                                                         </th>
+                                                         <th class="con-bordes" style="text-align:right; width: 120px">
+                                                            <span t-esc="o.agregar_punto_de_miles(merm_tot)"/>
+                                                        </th>
+                                                     <th></th>
+                                                     <th></th>
+                                                     <th></th>
+                                                        <th class="con-bordes" style="text-align:right; width: 120px">
+                                                            <span t-esc="o.agregar_punto_de_miles(cos_tot)"/>
+                                                        </th>
+                                                        <th class="con-bordes" style="text-align:right; width: 120px">
+                                                            <span t-esc="o.agregar_punto_de_miles(kg_tot)"/>
+                                                        </th>
+                                                        <th class="con-bordes" style="text-align:right; width: 120px">
+                                                            <span t-esc="o.agregar_punto_de_miles(fin_tot)"/>
+                                                        </th>
+                                                </tr>
+<!--                                            </table>-->
+<!--                                        </div>-->
+                                     </div>
+                                 </body>
+                              </table>
+                            </div>
+                         </div>
+                         <div class="footer">
+                             <div class="text-center" style="border-top: 2px solid black;">
+                                 <ul class="list-inline">
+                                     Página:
+                                     <span class="page"/>
+                                     de
+                                     <span class="topage"/>
+                                 </ul>
+                             </div>
+                         </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

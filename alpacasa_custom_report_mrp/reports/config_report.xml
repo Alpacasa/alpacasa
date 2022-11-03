@@ -1,0 +1,196 @@
+<odoo>
+    <data>
+        <record id="paperformat_mrp_cab" model="report.paperformat">
+            <field name="name">Formato MRP</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">297</field>
+            <field name="page_width">210</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">40</field>
+            <field name="margin_bottom">15</field>
+            <field name="margin_left">1</field>
+            <field name="margin_right">1</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">25</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <report
+                id="report_mrp_menu_cab"
+                model="mrp.production.cab"
+                string="Resumen Orden de Producción"
+                report_type="qweb-pdf"
+                name="py_ctrm_mrp.report_orden_produccion_cab"
+                file="py_ctrm_mrp.report_orden_produccion_cab"
+                paperformat="paperformat_mrp_cab"
+        />
+
+        <record id="paperformat_mrp_cab_new" model="report.paperformat">
+            <field name="name">Formato MRP calidad</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">297</field>
+            <field name="page_width">210</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">8</field>
+            <field name="margin_bottom">15</field>
+            <field name="margin_left">1</field>
+            <field name="margin_right">1</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">25</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="paperformat_mrp_cab_dos" model="report.paperformat">
+            <field name="name">Formato MRP calidad Nueva Version</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">297</field>
+            <field name="page_width">210</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">8</field>
+            <field name="margin_bottom">15</field>
+            <field name="margin_left">1</field>
+            <field name="margin_right">1</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">25</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <report
+                id="report_mrp_menu_cab_2"
+                model="mrp.production.cab.wizard"
+                string="Resumen Orden de Producción 2.0"
+                report_type="qweb-pdf"
+                name="py_ctrm_mrp.report_resumen_orden_produccion_cab_dos"
+                file="py_ctrm_mrp.report_resumen_orden_produccion_cab_dos"
+                paperformat="paperformat_mrp_cab_dos"
+        />
+
+        <!--    <report
+                    id="report_mrp_menu_ordemn_produccion"
+                    model="mrp.production.cab"
+                    string="Orden de Producción"
+                    report_type="qweb-pdf"
+                    name="py_ctrm_mrp.report_resumen_orden_produccion_cab"
+                    file="py_ctrm_mrp.report_resumen_orden_produccion_cab"
+                    paperformat="paperformat_mrp_cab_new"
+            />-->
+
+        <report
+                id="report_mrp_menu_ordemn_produccion_wizard"
+                model="mrp.production.cab.wizard"
+                string="Orden de Producción"
+                report_type="qweb-pdf"
+                name="py_ctrm_mrp.report_resumen_orden_produccion_cab"
+                file="py_ctrm_mrp.report_resumen_orden_produccion_cab"
+                paperformat="paperformat_mrp_cab_new"
+        />
+
+        <record id="paperformat_mrp_calidad" model="report.paperformat">
+            <field name="name">Formato MRP Resumen calidad</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">297</field>
+            <field name="page_width">210</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">40</field>
+            <field name="margin_bottom">15</field>
+            <field name="margin_left">1</field>
+            <field name="margin_right">1</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">25</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <report
+                id="report_etiqueta_menu_resumen"
+                model="quality.check"
+                string="Resumen Calidad"
+                report_type="qweb-pdf"
+                name="py_ctrm_mrp.report_calidad"
+                file="py_ctrm_mrp.report_calidad"
+                paperformat="paperformat_mrp_calidad"
+        />
+
+        <record id="paperformat_mrp_esencia" model="report.paperformat">
+            <field name="name">Formato MRP Esencia</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">297</field>
+            <field name="page_width">210</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">40</field>
+            <field name="margin_bottom">15</field>
+            <field name="margin_left">1</field>
+            <field name="margin_right">1</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">25</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <report
+                id="report_mrp_esencia"
+                model="mrp.esencia"
+                string="Reporte"
+                report_type="qweb-pdf"
+                name="py_ctrm_mrp.report_mrp_esencia"
+                file="py_ctrm_mrp.report_mrp_esencia"
+                paperformat="paperformat_mrp_esencia"
+        />
+
+        <record id="paperformat_mrp_cab_superalimentos" model="report.paperformat">
+            <field name="name">Formato de informe SuperAlimentos</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">297</field>
+            <field name="page_width">210</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">8</field>
+            <field name="margin_bottom">15</field>
+            <field name="margin_left">1</field>
+            <field name="margin_right">1</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">25</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <report
+                id="report_resumen_superalimentos"
+                model="mrp.production.granos.cab.wizard"
+                string="Informe de SuperAlimentos"
+                report_type="qweb-pdf"
+                name="py_ctrm_mrp.report_resumen_superalimentos"
+                file="py_ctrm_mrp.report_resumen_superalimentos"
+                paperformat="paperformat_mrp_cab_superalimentos"
+        />
+
+        <record id="paperformat_analisis" model="report.paperformat">
+            <field name="name">Formato Análisis Cromatologia</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">297</field>
+            <field name="page_width">210</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">40</field>
+            <field name="margin_bottom">15</field>
+            <field name="margin_left">1</field>
+            <field name="margin_right">1</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">25</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <report
+                id="report_cromatologia"
+                model="quality.check"
+                string="Análisis de Calidad"
+                report_type="qweb-pdf"
+                name="py_ctrm_mrp.report_cromatologia"
+                file="py_ctrm_mrp.report_cromatologia"
+                paperformat="paperformat_analisis"
+        />
+
+    </data>
+</odoo>
