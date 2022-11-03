@@ -1,7 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
-    'name': 'Reportes de finanzas hechos a medida por Alpacasa',
+    'name': 'Reportes de finanzas hechos a medida por Alpacasa (Samuel)',
     'version': '1.0.1',
     'author': 'ALPACASA',
     'category': 'Accounting/Accounting',
